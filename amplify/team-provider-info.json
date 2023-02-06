@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "templereact7ce7503b": {}
+      },
+      "api": {
+        "templereact": {}
+      },
+      "storage": {
+        "imagestorage": {}
       }
     }
   }
