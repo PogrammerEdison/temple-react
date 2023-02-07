@@ -72,12 +72,14 @@ const App = ({ signOut }) => {
 
   console.log(Auth.currentUserInfo()['email'])
 
+  let data = Auth.currentUserInfo()
+
 
   return (
     <>
 
         <Router>
-          <Navbar button={signOut}/>
+          <Navbar button={signOut} username={data}/>
           <Routes>
             <Route path='/' exact element={<Home/>} />
             <Route path='/teams' element={<Teams/>} />

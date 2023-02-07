@@ -9,7 +9,6 @@ import { IconContext } from "react-icons";
 import { Button } from "@aws-amplify/ui-react";
 
 function Navbar(props) {
-
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
   return (
@@ -17,7 +16,7 @@ function Navbar(props) {
       <IconContext.Provider value={{ color: "undefined" }}>
         <div className="navbar">
           <Link to="#" className="menu-bars">
-            <FaIcons.FaBars onClick={showSidebar} style={{color:"black"}} />
+            <FaIcons.FaBars onClick={showSidebar} style={{ color: "black" }} />
           </Link>
         </div>
         <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
@@ -30,7 +29,10 @@ function Navbar(props) {
               </Link>
             </li>
             {/* <li style={{color:"red"}}>{props.userData}</li> */}
-            <li style={{color:"red"}}><Button onClick={props.button}>Sign Out</Button></li>
+            <li style={{ color: "red" }}>
+              <Button onClick={props.button}>Sign Out</Button>
+            </li>
+            {console.log(props.data)}
             {SidebarData.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
