@@ -4,17 +4,21 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import "@aws-amplify/ui-react/styles.css";
 import { Auth } from 'aws-amplify';
-// import { API, Storage } from "aws-amplify";
+import { API, Storage } from "aws-amplify";
 import {
   withAuthenticator,
 } from "@aws-amplify/ui-react";
 // import { listNotes } from "./graphql/queries";
-// import {
-//   createNote as createNoteMutation,
-//   deleteNote as deleteNoteMutation,
-// } from "./graphql/mutations";
+import {
+  createUserProfile as createUserProfileMutation,
+  deleteNote as deleteNoteMutation,
+} from "./graphql/mutations";
 import Home from "./pages/Home";
 import Teams from "./pages/Teams";
+import Profile from "./pages/Profile";
+
+
+import { listUserProfiles } from "./graphql/queries";
 
 const App = ({ signOut, user }) => {
   console.log(user);
@@ -81,6 +85,42 @@ const App = ({ signOut, user }) => {
   //   console.log('attributes:', user.username);
   // }
 
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  async function fetchUsers() {
+    const apiData = await API.graphql({ query: listUserProfiles });
+    const notesFromAPI = apiData.data.listUserProfiles.items;
+    let exist = false;
+    await Promise.all(
+      notesFromAPI.map(async (profile) => {
+        if (profile.name == user.username) {
+          exist = true
+        }
+      })
+    );
+    if (exist == false){
+      {console.log("create user")}
+      createUser()
+    }
+  }
+
+  async function createUser() {
+    const data = {
+      name: user.username,
+      image: "%PUBLIC_URL%/person.png",
+    };
+    //if (!!data.image) await Storage.put(data.name, image);
+    await Storage.put(data.name, data.image)
+    await API.graphql({
+      query: createUserProfileMutation,
+      variables: { input: data },
+    });
+    {console.log("added user")}
+    fetchUsers();
+  }
+
 
   return (
     <>
@@ -91,6 +131,7 @@ const App = ({ signOut, user }) => {
             <Route path='/' exact element={<Home/>} />
             <Route path='/teams' element={<Teams/>} />
             <Route path='/home' exact element={<Home/>} />
+            <Route path='/profile' element={<Profile username={user.username}/>} />
           </Routes>
         </Router>
 
