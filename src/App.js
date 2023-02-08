@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
@@ -16,7 +16,8 @@ import {
 import Home from "./pages/Home";
 import Teams from "./pages/Teams";
 
-const App = ({ signOut }) => {
+const App = ({ signOut, user }) => {
+  console.log(user);
   //const [notes, setNotes] = useState([]);
 
   // useEffect(() => {
@@ -70,16 +71,22 @@ const App = ({ signOut }) => {
 
 
 
-  console.log(Auth.currentUserInfo()['email'])
+  // useEffect(() => {
+  //    getUserInfo();
+  //   }, []);
 
-  let data = Auth.currentUserInfo()
+
+  //  async function getUserInfo() {
+  //   const user = await Auth.currentAuthenticatedUser();
+  //   console.log('attributes:', user.username);
+  // }
 
 
   return (
     <>
 
         <Router>
-          <Navbar button={signOut} username={data}/>
+          <Navbar button={signOut} test={user}/>
           <Routes>
             <Route path='/' exact element={<Home/>} />
             <Route path='/teams' element={<Teams/>} />

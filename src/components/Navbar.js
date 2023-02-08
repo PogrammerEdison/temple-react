@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { Link } from "react-router-dom";
@@ -8,7 +8,9 @@ import "./Navbar.css";
 import { IconContext } from "react-icons";
 import { Button } from "@aws-amplify/ui-react";
 
+
 function Navbar(props) {
+
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
   return (
@@ -28,11 +30,11 @@ function Navbar(props) {
                 </div>
               </Link>
             </li>
-            {/* <li style={{color:"red"}}>{props.userData}</li> */}
+            <li style={{ color: "red" }}>{props.test.username}</li>
             <li style={{ color: "red" }}>
               <Button onClick={props.button}>Sign Out</Button>
             </li>
-            {console.log(props.data)}
+
             {SidebarData.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
