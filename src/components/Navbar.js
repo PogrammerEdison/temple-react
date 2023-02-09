@@ -25,27 +25,84 @@ function Navbar(props) {
 
   const [image, setImage] = useState("undefined");
 
+  // useEffect(() => {
+  //   fetchPfp();
+
+  // }, []);
+
   useEffect(() => {
-    fetchPfp();
+    fetchUsers();
   }, []);
+
+
+
+
+  async function fetchUsers() {
+    const apiData = await API.graphql({ query: listUserProfiles });
+    const notesFromAPI = apiData.data.listUserProfiles.items;
+    let exist = false;
+    await Promise.all(
+      notesFromAPI.map(async (profile) => {
+        if (profile.name === props.test.username) {
+          exist = true
+          fetchPfp()
+        }
+      })
+    );
+    if (exist === false){
+      createUser()
+    }
+  }
+
+
+
+
+  async function createUser() {
+    const data = {
+      name: props.test.username,
+      image: "default",
+    };
+    //if (!!data.image) await Storage.put(data.name, image);
+    console.log("creating user")
+    await API.graphql({
+      query: createUserProfileMutation,
+      variables: { input: data },
+    }).then(
+    fetchUsers());
+  }
+
+
+
+
+/////////////////////////////////////////////////
+
 
   async function fetchPfp() {
     const apiData = await API.graphql({ query: listUserProfiles });
-    console.log(apiData);
     const notesFromAPI = apiData.data.listUserProfiles.items;
     console.log(notesFromAPI);
     await Promise.all(
       notesFromAPI.map(async (user) => {
-        if (user.name == props.test.username) {
-          console.log(user.name)
-          console.log(user.image)
-          const url = await Storage.get(user.name);
-          console.log(url);
-          setImage(url);
+        if(user.name === props.test.username){
+          if(user.image === "default"){
+            const url = await Storage.get("default.jpg");
+            console.log(url);
+            setImage(url)
+          }
+          else{
+            //set their image
+            // console.log("the url is")
+            // console.log(url)
+            // user.image = url;
+            // setImage(url);
+            console.log("couldn't find the image")
+          }
         }
+        return user;
       })
     );
-  };
+    
+  }
 
 
   

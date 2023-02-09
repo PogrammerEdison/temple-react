@@ -85,41 +85,45 @@ const App = ({ signOut, user }) => {
   //   console.log('attributes:', user.username);
   // }
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  // useEffect(() => {
+  //   fetchUsers();
+  // }, []);
 
-  async function fetchUsers() {
-    const apiData = await API.graphql({ query: listUserProfiles });
-    const notesFromAPI = apiData.data.listUserProfiles.items;
-    let exist = false;
-    await Promise.all(
-      notesFromAPI.map(async (profile) => {
-        if (profile.name == user.username) {
-          exist = true
-        }
-      })
-    );
-    if (exist == false){
-      {console.log("create user")}
-      createUser()
-    }
-  }
 
-  async function createUser() {
-    const data = {
-      name: user.username,
-      image: "%PUBLIC_URL%/person.png",
-    };
-    //if (!!data.image) await Storage.put(data.name, image);
-    await Storage.put(data.name, data.image)
-    await API.graphql({
-      query: createUserProfileMutation,
-      variables: { input: data },
-    });
-    {console.log("added user")}
-    fetchUsers();
-  }
+
+
+  // async function fetchUsers() {
+  //   const apiData = await API.graphql({ query: listUserProfiles });
+  //   const notesFromAPI = apiData.data.listUserProfiles.items;
+  //   let exist = false;
+  //   await Promise.all(
+  //     notesFromAPI.map(async (profile) => {
+  //       if (profile.name == user.username) {
+  //         exist = true
+  //       }
+  //     })
+  //   );
+  //   if (exist == false){
+  //     {console.log("create user")}
+  //     createUser()
+  //   }
+  // }
+
+
+
+
+  // async function createUser() {
+  //   const data = {
+  //     name: user.username,
+  //     image: "default",
+  //   };
+  //   //if (!!data.image) await Storage.put(data.name, image);
+  //   await API.graphql({
+  //     query: createUserProfileMutation,
+  //     variables: { input: data },
+  //   }).then(
+  //   fetchUsers());
+  // }
 
 
   return (

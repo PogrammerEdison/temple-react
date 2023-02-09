@@ -13,7 +13,7 @@ export async function getImg(username) {
       notesFromAPI.map(async (user) => {
         if (user.name == username) {
           console.log(user.image);
-          image = user.image;
+          image = await Storage.get(user.name);
         }
       })
     );

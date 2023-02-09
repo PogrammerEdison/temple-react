@@ -32,6 +32,8 @@ function Home(props) {
       notesFromAPI.map(async (note) => {
         if (note.image) {
           const url = await Storage.get(note.name);
+          console.log("the url is")
+          console.log(url)
           note.image = url;
         }
         return note;
@@ -44,6 +46,8 @@ function Home(props) {
     event.preventDefault();
     const form = new FormData(event.target);
     const image = form.get("image");
+    console.log(image);
+    console.log(form.get("name"));
     const data = {
       name: form.get("name"),
       description: form.get("description"),
