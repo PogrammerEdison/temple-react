@@ -63,6 +63,8 @@ function Home(props) {
   }
 
   async function deleteNote({ id, name }) {
+    console.log(id)
+    console.log(name)
     const newNotes = notes.filter((note) => note.id !== id);
     setNotes(newNotes);
     await Storage.remove(name);

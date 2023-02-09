@@ -3,6 +3,7 @@ import { getImg } from "./Database";
 import { API, Storage } from "aws-amplify";
 import {
   Button,
+  ComponentPropsToStylePropsMap,
   Flex,
   Heading,
   Image,
@@ -10,6 +11,12 @@ import {
   TextField,
   View,
 } from "@aws-amplify/ui-react";
+import { listUserProfiles } from "../graphql/queries";
+import {
+  createUserProfile as createUserProfileMutation,
+  deleteUserProfile as deleteUserProfileMutation,
+  updateUserProfile as updateUserProfileMutation,
+} from "../graphql/mutations";
 
 function Profile(props) {
   const [img, setImg] = useState("");
@@ -21,11 +28,12 @@ function Profile(props) {
   async function setImage() {
     console.log(getImg(props.username));
     let stuff = await getImg(props.username);
+    console.log("got the image")
+    console.log(stuff)
     setImg(stuff);
   }
 
   async function changePfp() {
-    console.log(getImg(props.username));
     let stuff = await getImg(props.username);
     setImg(stuff);
   }
@@ -36,12 +44,38 @@ function Profile(props) {
     const image = form.get("image");
     const data = {
       name: props.username,
-      image: image.name,
+      image: image,
     };
-    await Storage.remove(data.name);
-    await Storage.put(data.name, image);
-    setImage();
+    console.log(image)
+    const apiData = await API.graphql({ query: listUserProfiles });
+    const notesFromAPI = apiData.data.listUserProfiles.items;
+    console.log(notesFromAPI);
+    await Promise.all(
+      notesFromAPI.map(async (user) => {
+        if (user.name === props.username) {
+          const dataUpdate = {
+            id: user.id,
+            name: user.name,
+            image: image.name,
+          };
+          console.log(dataUpdate);
+
+          await API.graphql({
+            query: updateUserProfileMutation,
+            variables: { input: dataUpdate }
+            })
+          await Storage.put(data.name, image)
+          // await Storage.put(data.name, image)
+          console.log(image);
+        }
+      }
+      ))
+    const apiData2 = await API.graphql({ query: listUserProfiles });
+    const notesFromAPI2 = apiData2.data.listUserProfiles.items;
+    console.log("news")
+    console.log(notesFromAPI2);
     event.target.reset();
+    setImage();
   }
 
 

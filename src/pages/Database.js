@@ -11,9 +11,15 @@ export async function getImg(username) {
     console.log(notesFromAPI);
     await Promise.all(
       notesFromAPI.map(async (user) => {
-        if (user.name == username) {
+        if (user.name === username) {
           console.log(user.image);
-          image = await Storage.get(user.name);
+          if(user.image === "default"){
+            image = await Storage.get("default.jpg");
+          }
+          else{
+            console.log("taking else path")
+            image = await Storage.get(username)
+          }
         }
       })
     );
