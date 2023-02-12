@@ -90,14 +90,20 @@ function Navbar(props) {
             setImage(url)
           }
           else{
+            const url = await Storage.get(props.test.username);
+            setImage(url)
             //set their image
             // console.log("the url is")
             // console.log(url)
             // user.image = url;
             // setImage(url);
-            console.log("couldn't find the image")
+            
           }
         }
+          else{
+            console.log("couldn't find the image")
+          }
+        
         return user;
       })
     );
