@@ -1,0 +1,24 @@
+        
+.parallelogram {
+    position: relative;
+    bottom:50%;
+    width: 300px;
+    height: 500px;
+    background: #32557f;
+    transform: skew(-20deg);
+    display:inline-block;
+    transition: transform .2s; /* Animation */
+    overflow: hidden;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+  }
+      
+  .parallelogram:hover {
+    transform: scale(1.2) skew(-20deg); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }
+
+.imageUnskew{
+  transform: skew(20deg);
+  object-fit: none
+}
