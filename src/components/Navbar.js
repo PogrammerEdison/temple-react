@@ -148,6 +148,7 @@ function Navbar(props) {
               return (
                 <li key={index} className={item.cName}>
                   <Link to={item.path}>
+                    {console.log(item.path)}
                     {item.icon}
                     <span>{item.title}</span>
                   </Link>

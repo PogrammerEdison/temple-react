@@ -1,5 +1,8 @@
 import React from "react";
 import { Button, Image } from "@aws-amplify/ui-react";
+import { Link } from "react-router-dom";
+import CityCard from "../components/CityCard"
+import { CityData } from "../components/cityData";
 
 import styles from "../styles/shapes.module.css";
 
@@ -20,77 +23,12 @@ function Messages() {
         }}
       >
         <div style={{ position: "fixed", top: "15%" }}>
-          <div className={styles.parallelogram}>
-            <div className={styles.imageUnskew}>
-              <Image
-                style={{
-                  flexShrink: "0",
-                  minWidth: "300%",
-                  minHeight: "300%",
-                  position: "relative",
-                  right: "100px",
-                }}
-                src={"/london.jpg"}
-              />
-            </div>
-          </div>
-          <div className={styles.parallelogram}>
-            <div className={styles.imageUnskew}>
-              <Image
-                style={{
-                  flexShrink: "0",
-                  minWidth: "300%",
-                  minHeight: "300%",
-                  position: "relative",
-                  right: "400px",
-                }}
-                src={"/hongkong.jpg"}
-              />
-            </div>
-          </div>
-          <div className={styles.parallelogram}>
-            <div className={styles.imageUnskew}>
-              <Image
-                style={{
-                  flexShrink: "0",
-                  minWidth: "300%",
-                  minHeight: "300%",
-                  position: "relative",
-                  right: "100px",
-                }}
-                src={"/london.jpg"}
-              />
-            </div>
-          </div>
-          <div className={styles.parallelogram}>
-            <div className={styles.imageUnskew}>
-              <Image
-                style={{
-                  flexShrink: "0",
-                  minWidth: "300%",
-                  minHeight: "300%",
-                  position: "relative",
-                  right: "100px",
-                }}
-                src={"/london.jpg"}
-              />
-            </div>
-          </div>
-          <div className={styles.parallelogram}>
-            <div className={styles.imageUnskew}>
-              <Image
-                style={{
-                  flexShrink: "0",
-                  minWidth: "300%",
-                  minHeight: "300%",
-                  position: "relative",
-                  right: "100px",
-                }}
-                src={"/london.jpg"}
-              />
-            </div>
-          </div>
-        </div>
+        {CityData.map((city) =>{
+          return(
+            <CityCard image={city.image} path={city.path} />
+          )
+        })}
+      </div>
       </div>
     </>
   );

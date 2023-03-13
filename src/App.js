@@ -17,7 +17,7 @@ import Home from "./pages/Home";
 import Teams from "./pages/Teams";
 import Profile from "./pages/Profile";
 import Messages from "./pages/Messages";
-
+import London from "./pages/London";
 
 import { listUserProfiles } from "./graphql/queries";
 
@@ -138,6 +138,7 @@ const App = ({ signOut, user }) => {
             <Route path='/home' exact element={<Home/>} />
             <Route path='/profile' element={<Profile username={user.username}/>} />
             <Route path='/messages' element={<Messages/>} />
+            <Route path='/london' element={<London/>} />
           </Routes>
         </Router>
 

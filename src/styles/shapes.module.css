@@ -16,9 +16,11 @@
       
   .parallelogram:hover {
     transform: scale(1.2) skew(-20deg); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    z-index: 5;
   }
 
 .imageUnskew{
   transform: skew(20deg);
-  object-fit: none
+  object-fit: none;
 }
+
